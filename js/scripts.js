@@ -1,15 +1,39 @@
 var encrypt = function(message) {
   var cleanedMessage = message.match(/[A-Za-z0-9]/g);
-  var msgLngth = cleanedMessage.length;
-  // parseInt(Math.sqrt(msgLngth)) === Math.sqrt(msgLngth)
-  var root = parseInt(Math.ceil(Math.sqrt(msgLngth)));
-
+  var messageLength  = cleanedMessage.length;
   var output = '';
-  for (var i = 0; i < msgLngth; i++) {
+  var outputArray = [];
+  var root = parseInt(Math.ceil(Math.sqrt(messageLength)));
+  var rectangle = [];
+  var row = '';
+
+  for (var i = 0; i < messageLength + 1; i++) {
     if (i % root == 0 && i !== 0) {
-      output += '\n'
+      rectangle.push(row);
+      row = cleanedMessage[i];
+    } else {
+      if (i !== messageLength) {
+        row += cleanedMessage[i];
+      }
     }
-    output += cleanedMessage[i]
   }
-  return output;
+  rectangle.push(row);
+
+  for(var i = 0; i < rectangle[0].length; i++) {
+    rectangle.forEach(function(row) {
+      if (row !== undefined) {
+        if (row[i] !== undefined) {
+          output += row[i]
+        }
+      }
+    });
+  }
+
+  var strLength = output.split('').length;
+
+  for (var i = 0; i < strLength; i += 5) {
+    outputArray.push(output.slice(i, i + 5));
+  }
+
+  return outputArray.join(' ');
 }
