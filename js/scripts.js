@@ -37,3 +37,22 @@ var encrypt = function(message) {
 
   return outputArray.join(' ');
 }
+
+$(document).ready(function() {
+
+  $(document).foundation();
+
+  $(document).on('open.fndtn.reveal', '[data-reveal]', function () {
+    var modal = $(this);
+    console.log(modal);
+  });
+
+
+  $("form#message_form").submit(function(event) {
+    var encryptedMessage = encrypt($('input#message').val());
+
+    $('#encrypted-message').text(encryptedMessage);
+    $('#myModal').foundation('reveal', 'open');
+    event.preventDefault();
+  });
+});
